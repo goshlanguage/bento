@@ -237,7 +237,7 @@ func init() {
 	ctx := audio.NewContext(44100)
 	audioContext = ctx
 
-	for _, file := range [...]string{"bounce.wav", "pause.wav", "unpause.wav"} {
+	for _, file := range [...]string{"bounce.wav", "pause.wav", "unpause.wav", "menu.wav"} {
 		player, err := LoadWav(file)
 		if err != nil {
 			fmt.Errorf("Crap, %v", err)
@@ -245,6 +245,8 @@ func init() {
 
 		sfxMap = append(sfxMap, player)
 	}
+	// chill out with the menu volume
+	sfxMap[3].SetVolume(0.3)
 }
 
 func (g *Game) Update() error {
@@ -253,13 +255,21 @@ func (g *Game) Update() error {
 		if menu {
 			sfxMap[1].Rewind()
 			sfxMap[1].Play()
+			sfxMap[3].Rewind()
+			sfxMap[3].Play()
 		} else {
 			sfxMap[2].Rewind()
 			sfxMap[2].Play()
+			sfxMap[3].Pause()
 		}
 	}
 
 	if !started {
+		if !sfxMap[3].IsPlaying() {
+			sfxMap[3].Rewind()
+			sfxMap[3].Play()
+		}
+
 		if 1 == rand.Intn(50) {
 			randX := rand.Float64() * float64(width)
 			randY := rand.Float64() * float64(height)
@@ -275,6 +285,10 @@ func (g *Game) Update() error {
 
 		for _, entity := range g.entities {
 			entity.Update(g.m)
+		}
+	} else if !menu {
+		if sfxMap[3].IsPlaying() {
+			sfxMap[3].Pause()
 		}
 	}
 
