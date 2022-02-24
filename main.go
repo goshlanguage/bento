@@ -45,9 +45,8 @@ func init() {
 	audioContext = ctx
 
 	for _, file := range [...]string{
-		"assets/sfx/bounce.wav",
+		"assets/sfx/shot.wav",
 		"assets/sfx/pause.wav",
-		"assets/sfx/unpause.wav",
 		"assets/sfx/menu.wav",
 	} {
 		player, err := LoadWav(file)
@@ -58,7 +57,7 @@ func init() {
 		sfxMap = append(sfxMap, player)
 	}
 	// chill out with the menu volume
-	sfxMap[3].SetVolume(0.3)
+	sfxMap[2].SetVolume(0.3)
 }
 
 func toggle(state map[string]interface{}, key string) map[string]interface{} {
@@ -77,19 +76,19 @@ func (g *Game) Update() error {
 		if *g.state["menu"].(*bool) {
 			sfxMap[1].Rewind()
 			sfxMap[1].Play()
-			sfxMap[3].Rewind()
-			sfxMap[3].Play()
-		} else {
 			sfxMap[2].Rewind()
 			sfxMap[2].Play()
-			sfxMap[3].Pause()
+		} else {
+			sfxMap[1].Rewind()
+			sfxMap[1].Play()
+			sfxMap[2].Pause()
 		}
 	}
 
 	if !*g.state["started"].(*bool) {
-		if !sfxMap[3].IsPlaying() {
-			sfxMap[3].Rewind()
-			sfxMap[3].Play()
+		if !sfxMap[2].IsPlaying() {
+			sfxMap[2].Rewind()
+			sfxMap[2].Play()
 		}
 
 		if 1 == rand.Intn(50) {
@@ -109,8 +108,8 @@ func (g *Game) Update() error {
 			entity.Update(g.m, g.state)
 		}
 	} else if !*g.state["menu"].(*bool) {
-		if sfxMap[3].IsPlaying() {
-			sfxMap[3].Pause()
+		if sfxMap[2].IsPlaying() {
+			sfxMap[2].Pause()
 		}
 	}
 
@@ -175,6 +174,7 @@ func (g *Game) Update() error {
 	return nil
 }
 
+// Draw is the main draw portion of the Game loop, which triggers all subDraws using the screen
 func (g *Game) Draw(screen *ebiten.Image) {
 	for _, e := range g.entities {
 		e.Draw(screen)
@@ -182,14 +182,15 @@ func (g *Game) Draw(screen *ebiten.Image) {
 
 	if *g.state["menu"].(*bool) && !*g.state["started"].(*bool) {
 		menu.MainMenu(screen, width, height)
-
 	}
 
 	if *g.state["menu"].(*bool) && *g.state["started"].(*bool) {
 		menu.Paused(screen, width, height)
 	}
 
-	// ebitenutil.DebugPrintAt(screen, fmt.Sprintf("%v", len(g.entities)), 600, 440)
+	if !*g.state["menu"].(*bool) && *g.state["started"].(*bool) {
+		menu.HUD(screen, len(g.entities), width, height)
+	}
 }
 
 func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
