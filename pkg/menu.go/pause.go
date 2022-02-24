@@ -15,11 +15,13 @@ func Paused(screen *ebiten.Image, windowWidth int, windowHeight int) {
 
 	t := "PAUSED"
 
-	n := time.Now().Second()
-	if n%2 > 0 {
+	s := time.Now().Second()
+	n := time.Now().Nanosecond()
+	if n > 2*(999999999/3) {
 		textColor = color.Black
 	}
-	text.Draw(screen, strconv.Itoa(n), font, 300, 300, color.White)
+
+	text.Draw(screen, strconv.Itoa(s), font, 300, 300, textColor)
 
 	bounds := text.BoundString(font, t)
 	text.Draw(screen, t, font, (windowWidth/2)-(bounds.Dx()/2), (windowHeight/2)-(bounds.Dy()/2), textColor)
