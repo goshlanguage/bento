@@ -3,6 +3,7 @@ package menu
 import (
 	"image/color"
 	"io/ioutil"
+	"time"
 
 	"github.com/golang/freetype/truetype"
 	"github.com/hajimehoshi/ebiten/v2"
@@ -28,9 +29,15 @@ func LoadFont() font.Face {
 }
 
 func MainMenu(screen *ebiten.Image, windowWidth int, windowHeight int) {
+	textColor := color.White
 	font := LoadFont()
+
+	n := time.Now().Second()
+	if n%2 > 0 {
+		textColor = color.Black
+	}
 
 	t := "CLICK TO START"
 	bounds := text.BoundString(font, t)
-	text.Draw(screen, t, font, 10, windowHeight-bounds.Dy(), color.White)
+	text.Draw(screen, t, font, 10, windowHeight-bounds.Dy(), textColor)
 }

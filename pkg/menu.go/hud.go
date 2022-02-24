@@ -13,6 +13,8 @@ func HUD(screen *ebiten.Image, particles int, windowWidth int, windowHeight int)
 
 	t := strconv.Itoa(particles)
 
+	textColor := color.White
+
 	bounds := text.BoundString(font, t)
-	text.Draw(screen, t, font, windowWidth-bounds.Dx()-10, bounds.Dy()+10, color.White)
+	text.Draw(screen, t, font, windowWidth-bounds.Dx()-10, bounds.Dy()+10, textColor)
 }
