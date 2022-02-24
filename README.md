@@ -1,6 +1,8 @@
 # べんとう(弁当) Bento
 
-![bento](./docs/bento.png)
+<p align="center">
+  <img src="./docs/bento.png" />
+</p>
 
 A collection of ebiten mini games
 
