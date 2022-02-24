@@ -25,6 +25,10 @@ var (
 	maxVX         = 5.0
 	maxVY         = 4.0
 	particleLimit = 512
+	playerX       = float64(width) / 2
+	playerY       = float64(height) / 2
+	playerVX      = 3.0
+	playerVY      = 3.0
 	trueTrue      = true
 
 	audioContext *audio.Context
@@ -132,8 +136,37 @@ func (g *Game) Update() error {
 		if g.m[cursorX/ballSize][cursorY/ballSize] == nil {
 			dx := (float64(cursorX) - (float64(width) / 2)) / float64(width) * 2 * maxVX
 			dy := (float64(cursorY) - (float64(height) / 2)) / float64(height) * 2 * maxVY
-			newBall := ball.NewBall(float64(width)/2, float64(height)/2, dx, dy)
+
+			newBall := ball.NewBall(playerX, playerY, dx, dy)
 			g.entities = append(g.entities, &newBall)
+		}
+	}
+
+	if ebiten.IsKeyPressed(ebiten.KeyW) {
+		playerY -= playerVY
+		if playerY < 0.0 {
+			playerY = 0.0
+		}
+	}
+
+	if ebiten.IsKeyPressed(ebiten.KeyS) {
+		playerY += playerVY
+		if playerY > float64(height) {
+			playerY = float64(height)
+		}
+	}
+
+	if ebiten.IsKeyPressed(ebiten.KeyA) {
+		playerX -= playerVX
+		if playerX < 0.0 {
+			playerX = 0.0
+		}
+	}
+
+	if ebiten.IsKeyPressed(ebiten.KeyD) {
+		playerX += playerVX
+		if playerX > float64(width) {
+			playerX = float64(width)
 		}
 	}
 
