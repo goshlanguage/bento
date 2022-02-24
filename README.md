@@ -14,7 +14,9 @@ Below are a list of branches:
 
 ## main
 
-![main](./docs/main.gif)
+<p align="center">
+  <img src="./docs/main.gif" />
+</p>
 
 The sandbox currently has makings of a space shooter like an asteroids clone. To get started:
 
