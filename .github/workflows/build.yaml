@@ -32,3 +32,16 @@ jobs:
 
     - name: Build
       run: go build -v ./...
+
+    - name: Build WASM target and stage page
+      run: |
+        mkdir public
+        GOOS=js GOARCH=wasm go build -o public/bento.wasm github.com/goshlanguage/bento
+        cp $(go env GOROOT)/misc/wasm/wasm_exec.js ./public/
+        cp assets/web/index.html ./public/
+        cp assets/web/main.html ./public/
+
+    - name: Deploy github pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
