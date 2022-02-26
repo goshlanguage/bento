@@ -38,8 +38,10 @@ jobs:
         mkdir public
         GOOS=js GOARCH=wasm go build -o public/bento.wasm github.com/goshlanguage/bento
         cp $(go env GOROOT)/misc/wasm/wasm_exec.js ./public/
-        cp assets/web/index.html ./public/
-        cp assets/web/main.html ./public/
+        cp web/index.html ./public/
+        cp web/main.html ./public/
+        cp assets ./public/
+
 
     - name: Deploy github pages
       uses: peaceiris/actions-gh-pages@v3
