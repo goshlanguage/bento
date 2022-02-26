@@ -21,16 +21,17 @@ func LoadFont() font.Face {
 
 	fontData, err := ioutil.ReadFile(fontPath)
 	if err != nil {
+		buffer := ""
 		filepath.Walk(".",
 			func(path string, info os.FileInfo, err error) error {
 				if err != nil {
 					return err
 				}
-				fmt.Println(path, info.Size())
+				buffer += fmt.Sprintf("%s\n", path)
 				return nil
 			})
 
-		panic("failed to load font face, womp womp")
+		panic(fmt.Sprintf("failed to load font face, womp womp\n%s", buffer))
 	}
 
 	tt, _ := truetype.Parse(fontData)
