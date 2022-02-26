@@ -14,7 +14,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/inpututil"
 
 	"github.com/goshlanguage/bento/pkg/ball"
-	"github.com/goshlanguage/bento/pkg/menu.go"
+	"github.com/goshlanguage/bento/pkg/menu"
 	"github.com/goshlanguage/bento/pkg/types"
 )
 

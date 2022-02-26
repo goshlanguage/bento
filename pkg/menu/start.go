@@ -1,8 +1,11 @@
 package menu
 
 import (
+	"fmt"
 	"image/color"
 	"io/ioutil"
+	"os"
+	"path/filepath"
 	"time"
 
 	"github.com/golang/freetype/truetype"
@@ -18,6 +21,15 @@ func LoadFont() font.Face {
 
 	fontData, err := ioutil.ReadFile(fontPath)
 	if err != nil {
+		filepath.Walk(".",
+			func(path string, info os.FileInfo, err error) error {
+				if err != nil {
+					return err
+				}
+				fmt.Println(path, info.Size())
+				return nil
+			})
+
 		panic("failed to load font face, womp womp")
 	}
 
