@@ -7,11 +7,13 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
+
+	"github.com/goshlanguage/bento/assets"
 )
 
 func Paused(screen *ebiten.Image, windowWidth int, windowHeight int) {
 	textColor := color.White
-	font := LoadFont()
+	font := assets.LoadFont()
 
 	t := "PAUSED"
 

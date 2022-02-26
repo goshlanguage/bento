@@ -6,10 +6,12 @@ import (
 
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/text"
+
+	"github.com/goshlanguage/bento/assets"
 )
 
 func HUD(screen *ebiten.Image, particles int, windowWidth int, windowHeight int) {
-	font := LoadFont()
+	font := assets.LoadFont()
 
 	t := strconv.Itoa(particles)
 
