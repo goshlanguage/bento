@@ -40,7 +40,7 @@ jobs:
         cp $(go env GOROOT)/misc/wasm/wasm_exec.js ./public/
         cp web/index.html ./public/
         cp web/main.html ./public/
-        cp assets ./public/
+        cp -r assets ./public/
 
 
     - name: Deploy github pages
