@@ -1,4 +1,8 @@
 .iframe-container {
   text-align:center;
-    width:100%;
+  width:100%;
+}
+
+.center {
+  text-align:center;
 }
