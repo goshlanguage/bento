@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+
+.iframe-container {
+  text-align:center;
+  width:100%;
+}
+
+.center {
+  text-align:center;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
