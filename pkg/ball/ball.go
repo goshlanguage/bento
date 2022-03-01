@@ -13,6 +13,7 @@ import (
 
 const (
 	ballSize   = 2
+	damage     = 20
 	friction   = .001
 	wrapAround = true
 )
@@ -200,6 +201,10 @@ func (b *Ball) Draw(screen *ebiten.Image) {
 		opts.GeoM.Scale(b.ScaleX, b.ScaleY)
 	}
 	screen.DrawImage(b.Sprite, opts)
+}
+
+func (b *Ball) Damage() int {
+	return damage
 }
 
 func (b *Ball) TimesUp() bool {

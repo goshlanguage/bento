@@ -7,6 +7,7 @@ import (
 type Map map[int]map[int]Entity
 
 type Entity interface {
+	Damage() int
 	Update(m Map, s map[string]interface{})
 	Draw(*ebiten.Image)
 	TimesUp() bool
