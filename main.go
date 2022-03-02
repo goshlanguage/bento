@@ -30,6 +30,7 @@ var (
 	audioContext *audio.Context
 	sfxMap       []*audio.Player
 	gameover     bool
+	timer        time.Time
 )
 
 type Game struct {
@@ -61,6 +62,7 @@ func init() {
 	}
 	// chill out with the menu volume
 	sfxMap[2].SetVolume(0.3)
+	timer = time.Now()
 }
 
 func toggle(state map[string]interface{}, key string) map[string]interface{} {
@@ -83,6 +85,7 @@ func (g *Game) Update() error {
 
 				g.entities = []types.Entity{}
 				gameover = true
+				timer = time.Now()
 			}
 		}
 
@@ -188,11 +191,13 @@ func (g *Game) Update() error {
 		}
 	} else {
 		if ebiten.IsMouseButtonPressed(ebiten.MouseButtonLeft) || inpututil.IsKeyJustReleased(g.players[0].Controller.Start) || inpututil.IsTouchJustReleased(0) {
-			gameover = false
+			if time.Now().After(timer.Add(time.Second)) {
+				gameover = false
 
-			g.players[0].HP = 100
-			newGame := InitGame()
-			g = newGame
+				g.players[0].HP = 100
+				newGame := InitGame()
+				g = newGame
+			}
 		}
 	}
 
@@ -251,6 +256,7 @@ func LoadWav(filepath string) (*audio.Player, error) {
 	return audioPlayer, errs
 }
 
+// InitGame is used both at the beginning of the game loop, but also in when the game is over
 func InitGame() *Game {
 	p := player.Default(width, height, ballSize)
 	players := []*player.Player{
